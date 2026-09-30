@@ -1,0 +1,890 @@
+<title>Totem CRIA · BB Digital Week 2026</title>
+
+<style>
+@font-face{font-family:"Archivo";font-style:normal;font-weight:400 800;font-stretch:100%;font-display:block;src:url(data:font/woff2;base64,__FONT_NORMAL__) format("woff2");}
+@font-face{font-family:"Archivo";font-style:normal;font-weight:700 800;font-stretch:125%;font-display:block;src:url(data:font/woff2;base64,__FONT_EXP__) format("woff2");}
+
+/* Paleta base do BBDW: preto, branco, amarelo elétrico e azul royal. */
+:root{
+  --bb-yellow:#FCFC30;
+  --bb-blue:#465EFF;
+  --bb-indigo:#3333BD;
+  --bb-cyan:#54DCFC;
+
+  --ground:#EDEEF3;
+  --surface:#FFFFFF;
+  --surface-2:#F2F3F8;
+  --ink:#0B0C14;
+  --ink-mute:#5D6070;
+  --line:#E1E3EC;
+  --accent:#465EFF;
+  --hl:#3D52E6;
+  --invert-ground:#07080F;
+  --invert-surface:#11131E;
+  --invert-ink:#F4F5FA;
+  --invert-mute:#9A9EB2;
+  --invert-line:#232638;
+  --shadow:0 1px 2px rgba(11,12,20,.05), 0 10px 28px -14px rgba(11,12,20,.22);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#04050A;
+    --surface:#0E1019;
+    --surface-2:#171A26;
+    --ink:#F2F3F8;
+    --ink-mute:#9A9EB2;
+    --line:#22253A;
+    --accent:#7F90FF;
+    --hl:#FCFC30;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#04050A;
+  --surface:#0E1019;
+  --surface-2:#171A26;
+  --ink:#F2F3F8;
+  --ink-mute:#9A9EB2;
+  --line:#22253A;
+  --accent:#7F90FF;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-stretch:100%;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ---------- deck shell ---------- */
+.deck{height:100dvh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y mandatory;scroll-behavior:smooth;}
+.slide{scroll-snap-align:start;min-height:100dvh;display:grid;place-items:center;padding:clamp(12px,2.2vh,28px) clamp(12px,2vw,32px);}
+.stage{
+  container-type:inline-size;
+  width:min(100%, calc((100dvh - clamp(24px,4.4vh,56px)) * 16 / 9));
+  aspect-ratio:16/9;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:4px;
+  box-shadow:var(--shadow);
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.stage.is-invert{background:var(--invert-ground);border-color:var(--invert-line);color:var(--invert-ink);}
+.stage.is-invert .eyebrow,.stage.is-invert .mark,.stage.is-invert .lede{color:var(--invert-mute);}
+.stage.is-invert .eyebrow b{color:var(--bb-yellow);}
+
+/* faixa de marca: amarelo + azul no topo de cada slide */
+.stage::before{
+  content:"";position:absolute;left:0;top:0;right:0;height:.42cqw;z-index:3;
+  background:linear-gradient(90deg,var(--bb-yellow) 0 38%,var(--bb-blue) 38% 100%);
+}
+
+/* ---------- slide chrome ---------- */
+.bar{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:2cqw;padding:3.2cqw 4cqw 0;position:relative;z-index:2;}
+.eyebrow,.mark{font-size:1.03cqw;font-weight:600;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-mute);margin:0;}
+.eyebrow b{color:var(--accent);font-weight:700;}
+.mark{font-weight:700;letter-spacing:.19em;white-space:nowrap;display:flex;align-items:center;gap:1cqw;}
+.mark img{height:1.7cqw;width:auto;display:block;}
+.body-area{flex:1 1 auto;min-height:0;padding:2cqw 4cqw 3.4cqw;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2;}
+
+/* ---------- type ---------- */
+h1,h2{font-stretch:125%;font-weight:800;line-height:.99;letter-spacing:-.021em;text-wrap:balance;margin:0;}
+h1{font-size:5cqw;}
+h2{font-size:3.4cqw;}
+.hl{color:var(--hl);}
+.is-invert .hl{color:var(--bb-yellow);}
+.lede{font-size:1.5cqw;line-height:1.45;color:var(--ink-mute);max-width:46ch;margin:0;font-weight:400;}
+p{margin:0;}
+
+/* ---------- head block ---------- */
+.head{display:flex;flex-direction:column;gap:1.1cqw;margin-bottom:2.2cqw;}
+.head.row{flex-direction:row;align-items:flex-end;justify-content:space-between;gap:4cqw;}
+.head.row h2{flex:1 1 auto;max-width:18ch;}
+.head.row .lede{flex:0 1 38ch;font-size:1.34cqw;}
+
+/* ---------- cover ---------- */
+.cover{display:grid;grid-template-columns:1.12fr .88fr;}
+.cover .left{display:flex;flex-direction:column;padding:4.4cqw 4cqw 3.6cqw;position:relative;z-index:2;}
+.cover .logo{height:4.2cqw;width:auto;align-self:flex-start;}
+.cover .kick{margin-top:auto;display:flex;align-items:center;gap:1cqw;font-size:1.1cqw;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--invert-mute);}
+.cover .kick i{display:inline-block;width:2.4cqw;height:.42cqw;background:var(--bb-yellow);}
+.cover h1{margin-top:1.4cqw;max-width:14ch;}
+.cover .lede{margin-top:1.8cqw;font-size:1.38cqw;max-width:44ch;}
+.cover-foot{margin-top:2.6cqw;display:flex;gap:3cqw;border-top:1px solid var(--invert-line);padding-top:1.5cqw;}
+.cover-foot div{display:flex;flex-direction:column;gap:.3cqw;}
+.cover-foot span{font-size:.9cqw;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--invert-mute);}
+.cover-foot b{font-size:1.3cqw;font-weight:700;color:var(--invert-ink);}
+.cover .right{position:relative;overflow:hidden;}
+.cover .right img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;}
+.cover .right::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--invert-ground) 0%,rgba(7,8,15,0) 22%);}
+.cover .badge{
+  position:absolute;right:2.2cqw;bottom:2.2cqw;z-index:2;
+  background:var(--bb-yellow);color:#0B0C14;padding:.8cqw 1.2cqw;border-radius:2px;
+  font-size:.92cqw;font-weight:800;letter-spacing:.14em;text-transform:uppercase;line-height:1.3;
+}
+.cover .badge small{display:block;font-weight:600;letter-spacing:.08em;text-transform:none;font-size:.86cqw;}
+
+/* ---------- steps ---------- */
+.steps{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:1.4cqw;}
+.step{display:flex;flex-direction:column;gap:.7cqw;border-top:2px solid var(--ink);padding-top:1.05cqw;}
+.step:first-child{border-top-color:var(--accent);}
+.is-invert .step{border-top-color:var(--invert-line);}
+.is-invert .step:first-child{border-top-color:var(--bb-yellow);}
+.step .n{font-size:1cqw;font-weight:700;letter-spacing:.15em;color:var(--ink-mute);font-variant-numeric:tabular-nums;}
+.step h3{font-size:1.55cqw;font-weight:700;line-height:1.16;margin:0;letter-spacing:-.01em;}
+.step p{font-size:1.13cqw;line-height:1.42;color:var(--ink-mute);}
+.is-invert .step p,.is-invert .step .n{color:var(--invert-mute);}
+
+.specstrip{margin-top:2.1cqw;display:flex;flex-wrap:wrap;gap:.55cqw 2.2cqw;border-top:1px solid var(--line);padding-top:1.3cqw;font-size:1.1cqw;color:var(--ink-mute);}
+.specstrip b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums;}
+
+/* ---------- 01 · o que é ---------- */
+.intro{display:grid;grid-template-columns:1fr 22cqw;gap:3.4cqw;align-items:center;}
+.intro .col{min-width:0;}
+.totem-shot{margin:0;display:flex;flex-direction:column;gap:.8cqw;}
+.totem-shot img{width:100%;aspect-ratio:2/3;height:auto;display:block;border-radius:3px;object-fit:cover;background:var(--surface-2);}
+.totem-shot figcaption{font-size:.98cqw;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute);line-height:1.45;}
+
+/* ---------- 02 · o evento ---------- */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--line);margin-bottom:2.4cqw;}
+.stat{padding:1.4cqw 1.2cqw 1.3cqw 0;display:flex;flex-direction:column;gap:.35cqw;}
+.stat+.stat{padding-left:1.4cqw;border-left:1px solid var(--line);}
+.stat b{font-stretch:125%;font-weight:800;font-size:3.6cqw;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.stat:first-child b{color:var(--accent);}
+.stat span{font-size:1.02cqw;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);}
+.fit{display:grid;grid-template-columns:1fr 1.25fr;gap:4cqw;align-items:start;}
+.fit h3{font-size:1.9cqw;font-stretch:125%;font-weight:800;line-height:1.1;margin:0 0 .9cqw;letter-spacing:-.012em;}
+.fit .lede{font-size:1.24cqw;}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:.2cqw 2cqw;}
+.track{display:grid;grid-template-columns:1.2cqw 1fr;gap:.9cqw;padding:.8cqw 0;border-top:1px solid var(--line);}
+.track i{width:1cqw;height:1cqw;border-radius:2px;margin-top:.25cqw;background:var(--bb-blue);}
+.track:nth-child(4n+1) i,.track:nth-child(4n+4) i{background:var(--bb-yellow);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12);}
+.track b{display:block;font-size:1.12cqw;font-weight:700;line-height:1.2;margin-bottom:.2cqw;}
+.track span{font-size:1cqw;line-height:1.38;color:var(--ink-mute);}
+
+/* ---------- experiências: galerias ---------- */
+.xhead{display:grid;grid-template-columns:auto 1fr;gap:2.4cqw;align-items:end;margin-bottom:1.8cqw;}
+.xnum{font-stretch:125%;font-weight:800;font-size:7.6cqw;line-height:.8;color:var(--bb-yellow);letter-spacing:-.04em;}
+.stage:not(.is-invert) .xnum{color:var(--accent);}
+.xhead h2{font-size:3.1cqw;}
+.xhead .lede{margin-top:.8cqw;font-size:1.28cqw;max-width:60ch;}
+.gal{display:grid;gap:1.2cqw;min-height:0;}
+.gal figure{margin:0;position:relative;overflow:hidden;border-radius:3px;background:var(--invert-surface);}
+.gal figure>img{width:100%;height:100%;object-fit:cover;display:block;}
+.gal figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:2.4cqw 1.1cqw .9cqw;
+  background:linear-gradient(transparent,rgba(4,5,10,.86));color:#fff;
+  font-size:.98cqw;line-height:1.35;
+}
+.gal figcaption b{display:block;font-size:.86cqw;letter-spacing:.16em;text-transform:uppercase;color:var(--bb-yellow);margin-bottom:.15cqw;}
+.inset{position:absolute;top:1cqw;left:1cqw;width:5.4cqw;border:2px solid #fff;border-radius:2px;box-shadow:0 2px 10px rgba(0,0,0,.45);z-index:2;background:#000;}
+.inset img{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;}
+.inset.wide img{aspect-ratio:4/3;}
+.inset.wide{width:7.6cqw;}
+.inset span{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);color:#fff;font-size:.62cqw;font-weight:700;letter-spacing:.12em;text-align:center;padding:.15cqw 0;text-transform:uppercase;}
+
+.xgrid{display:grid;grid-template-columns:minmax(0,1fr) repeat(3,21.6cqw);gap:1.4cqw;align-items:end;}
+.xgrid .xhead{display:flex;flex-direction:column;align-items:flex-start;gap:1.2cqw;margin:0;padding-right:1cqw;align-self:center;}
+.xgrid .xhead h2{font-size:2.9cqw;}
+.xgrid .xhead .lede{margin:0;font-size:1.22cqw;}
+.xgrid figure{margin:0;position:relative;overflow:hidden;border-radius:3px;aspect-ratio:2/3;background:var(--invert-surface);}
+.xgrid figure>img{width:100%;height:100%;object-fit:cover;display:block;}
+.xgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:3cqw 1cqw .9cqw;background:linear-gradient(transparent,rgba(4,5,10,.9));color:#fff;font-size:.98cqw;line-height:1.35;}
+.xgrid figcaption b{display:block;font-size:.82cqw;letter-spacing:.16em;text-transform:uppercase;color:var(--bb-yellow);margin-bottom:.15cqw;}
+.xgrid .inset{width:4.6cqw;top:.9cqw;left:.9cqw;}
+.xgrid .inset.wide{width:6.2cqw;}
+.xmeta{display:flex;flex-direction:column;gap:.35cqw;border-top:1px solid var(--invert-line);padding-top:1cqw;width:100%;font-size:1.02cqw;color:var(--invert-mute);}
+.xmeta b{color:var(--invert-ink);}
+
+/* ---------- jornal ---------- */
+.news{display:grid;grid-template-columns:minmax(0,1fr) repeat(2,26.5cqw);gap:2cqw;align-items:center;}
+.paper{margin:0;aspect-ratio:3/4;border-radius:3px;overflow:hidden;box-shadow:0 14px 34px -14px rgba(0,0,0,.8);}
+.paper img{width:100%;height:100%;object-fit:cover;display:block;}
+.news .side{display:flex;flex-direction:column;justify-content:center;gap:1.6cqw;min-width:0;}
+.news .side .steps{grid-template-columns:1fr;gap:1cqw;}
+
+/* ---------- moldura + envelopamento ---------- */
+.brandgrid{display:grid;grid-template-columns:.95fr 1.15fr 1fr;gap:2.4cqw;align-items:end;}
+.brandgrid figure{margin:0;display:flex;flex-direction:column;gap:.8cqw;min-width:0;}
+.brandgrid img{width:100%;display:block;border-radius:3px;object-fit:contain;}
+.brandgrid .fr img{height:27cqw;filter:drop-shadow(0 8px 18px rgba(11,12,20,.25));}
+.brandgrid .wr img{height:30cqw;object-fit:contain;background:#E9EAEE;}
+.brandgrid figcaption{display:flex;flex-direction:column;gap:.25cqw;border-top:1px solid var(--line);padding-top:.7cqw;}
+.brandgrid .nm{font-size:1.12cqw;font-weight:800;letter-spacing:-.005em;}
+.brandgrid .sb{font-size:.98cqw;line-height:1.38;color:var(--ink-mute);}
+.real{display:flex;flex-direction:column;gap:1.2cqw;}
+.real .pair{display:grid;grid-template-columns:1fr 1fr;gap:1cqw;}
+.real .pair img{height:13.5cqw;object-fit:contain;background:var(--surface-2);}
+.deflist{display:flex;flex-direction:column;}
+.deflist div{display:grid;grid-template-columns:8.4cqw 1fr;gap:1cqw;padding:.6cqw 0;border-bottom:1px solid var(--line);}
+.deflist div:first-child{border-top:1px solid var(--line);}
+.deflist dt{font-size:.9cqw;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin:0;padding-top:.12cqw;}
+.deflist dd{font-size:1cqw;line-height:1.36;color:var(--ink-mute);margin:0;}
+
+/* ---------- vídeo ---------- */
+.vgrid{display:grid;grid-template-columns:17cqw 17cqw 1fr;gap:2.6cqw;align-items:stretch;}
+.vfig{margin:0;display:flex;flex-direction:column;gap:.85cqw;min-width:0;}
+.vwrap{position:relative;width:100%;aspect-ratio:9/16;border-radius:3px;overflow:hidden;background:var(--invert-line);}
+.vwrap video{width:100%;height:100%;display:block;object-fit:cover;}
+.vwrap .poster-img{display:none;width:100%;height:100%;object-fit:cover;}
+.vfig .tag{font-size:.95cqw;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--bb-yellow);}
+.vfig .txt{font-size:1.08cqw;line-height:1.4;color:var(--invert-mute);margin-top:.25cqw;}
+.vnote{display:flex;flex-direction:column;justify-content:center;gap:1.8cqw;min-width:0;}
+.vnote .blk{border-top:1px solid var(--invert-line);padding-top:1.1cqw;}
+.vnote h3{font-size:1.55cqw;font-weight:800;font-stretch:125%;margin:0 0 .45cqw;letter-spacing:-.012em;line-height:1.12;color:var(--invert-ink);}
+.vnote p{font-size:1.12cqw;line-height:1.45;color:var(--invert-mute);}
+.vnote p b{color:var(--invert-ink);font-weight:700;}
+
+/* ---------- cards ---------- */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6cqw;align-items:stretch;}
+.card{border:1px solid var(--line);border-radius:3px;padding:1.8cqw;display:flex;flex-direction:column;gap:.9cqw;background:var(--surface);min-width:0;position:relative;}
+.card::before{content:"";position:absolute;left:-1px;top:-1px;width:3.2cqw;height:.36cqw;background:var(--bb-yellow);}
+.card:nth-child(2)::before{background:var(--bb-blue);}
+.card .kicker{font-size:.98cqw;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);}
+.card h3{font-size:1.8cqw;font-weight:800;line-height:1.1;margin:0;letter-spacing:-.012em;font-stretch:125%;}
+.card p{font-size:1.12cqw;line-height:1.46;color:var(--ink-mute);}
+.card .why{margin-top:auto;padding-top:1cqw;border-top:1px solid var(--line);font-size:1.02cqw;line-height:1.4;color:var(--ink-mute);}
+.card .why b{color:var(--ink);font-weight:700;}
+
+/* ---------- investimento ---------- */
+.price{display:grid;grid-template-columns:1.25fr .75fr;gap:3.6cqw;align-items:stretch;}
+.lines{display:flex;flex-direction:column;}
+.line{display:grid;grid-template-columns:1fr auto;gap:.4cqw 2cqw;padding:1.35cqw 0;border-bottom:1px solid var(--invert-line);}
+.line:first-child{border-top:1px solid var(--invert-line);}
+.line h3{font-size:1.5cqw;font-weight:800;font-stretch:125%;margin:0;letter-spacing:-.01em;}
+.line .v{font-size:1.6cqw;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.line p{grid-column:1 / -1;font-size:1.06cqw;line-height:1.45;color:var(--invert-mute);max-width:70ch;}
+.total{background:var(--bb-yellow);color:#0B0C14;border-radius:3px;padding:2.4cqw;display:flex;flex-direction:column;justify-content:space-between;gap:1.6cqw;}
+.total small{font-size:1cqw;font-weight:800;letter-spacing:.2em;text-transform:uppercase;}
+.total b{display:block;white-space:nowrap;font-stretch:125%;font-weight:800;font-size:4.3cqw;line-height:.95;letter-spacing:-.03em;font-variant-numeric:tabular-nums;}
+.total p{font-size:1.08cqw;line-height:1.45;}
+.total ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.45cqw;font-size:1.04cqw;line-height:1.35;border-top:1px solid rgba(11,12,20,.2);padding-top:1.2cqw;}
+.total li::before{content:"✓ ";font-weight:800;color:var(--bb-indigo);}
+.price-note{margin-top:1.5cqw;font-size:1cqw;line-height:1.45;color:var(--invert-mute);}
+
+/* ---------- close ---------- */
+.close-grid{display:grid;grid-template-columns:1fr .85fr;gap:4.5cqw;align-items:center;}
+.caselist{display:flex;flex-direction:column;}
+.caselist div{display:flex;align-items:baseline;justify-content:space-between;gap:2cqw;padding:1.05cqw 0;border-bottom:1px solid var(--line);}
+.caselist div:first-child{border-top:1px solid var(--line);}
+.caselist .who{font-size:1.42cqw;font-weight:700;letter-spacing:-.008em;}
+.caselist .what{font-size:1.1cqw;color:var(--ink-mute);text-align:right;font-variant-numeric:tabular-nums;}
+.cta{border-left:.42cqw solid var(--bb-yellow);padding-left:2.1cqw;display:flex;flex-direction:column;gap:1.15cqw;}
+.cta h2{font-size:3cqw;max-width:14ch;}
+.cta p{font-size:1.26cqw;line-height:1.5;color:var(--ink-mute);}
+.contact{margin-top:.5cqw;font-size:1.14cqw;line-height:1.6;color:var(--ink-mute);border-top:1px solid var(--line);padding-top:1.15cqw;}
+.contact b{display:block;color:var(--ink);font-weight:700;font-stretch:125%;font-size:1.3cqw;letter-spacing:-.01em;}
+.contact img{height:2.2cqw;width:auto;display:block;margin-bottom:1cqw;}
+.foot-note{margin-top:1.6cqw;border-top:1px solid var(--line);padding-top:1.1cqw;font-size:1cqw;line-height:1.45;color:var(--ink-mute);max-width:90ch;}
+.is-invert .foot-note{border-top-color:var(--invert-line);color:var(--invert-mute);}
+.foot-note b{color:inherit;font-weight:700;}
+
+/* logo claro/escuro conforme o fundo do slide */
+.logo-ink{display:block;}
+.logo-white{display:none;}
+.is-invert .logo-ink{display:none;}
+.is-invert .logo-white{display:block;}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .logo-ink{display:none;}
+  :root:not([data-theme="light"]) .logo-white{display:block;}
+}
+:root[data-theme="dark"] .logo-ink{display:none;}
+:root[data-theme="dark"] .logo-white{display:block;}
+
+/* ---------- progress rail ---------- */
+.rail{position:fixed;right:clamp(7px,.85vw,15px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:20;}
+.rail button{appearance:none;border:0;padding:0;cursor:pointer;width:3px;height:16px;border-radius:2px;background:var(--line);transition:background .2s, height .2s;}
+.rail button:hover{background:var(--ink-mute);}
+.rail button[aria-current="true"]{background:var(--bb-blue);height:26px;}
+.rail button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
+
+/* ---------- reveal (gated on .js so nothing is ever blank) ---------- */
+.js .reveal>*{opacity:0;transform:translateY(9px);transition:opacity .5s ease, transform .5s ease;}
+.js .slide.seen .reveal>*{opacity:1;transform:none;}
+.js .slide.seen .reveal>*:nth-child(2){transition-delay:.07s;}
+.js .slide.seen .reveal>*:nth-child(3){transition-delay:.14s;}
+@media (prefers-reduced-motion:reduce){
+  .deck{scroll-behavior:auto;}
+  .js .reveal>*{opacity:1;transform:none;transition:none;}
+}
+
+/* ---------- small screens ---------- */
+@media screen and (max-width:820px){
+  .deck{scroll-snap-type:none;height:auto;}
+  .slide{min-height:0;padding:0 0 14px;}
+  .stage{aspect-ratio:auto;width:100%;border-radius:0;border-left:0;border-right:0;}
+  .stage::before{height:4px;}
+  .bar{padding:22px 20px 0;}
+  .body-area{padding:16px 20px 26px;}
+  .eyebrow,.mark{font-size:10px;}
+  .mark img{height:14px;}
+  h1{font-size:34px;} h2,.xhead h2{font-size:26px;} .lede,.xhead .lede,.fit .lede{font-size:15px;}
+  .head.row{flex-direction:column;align-items:flex-start;gap:12px;}
+  .head.row .lede{font-size:15px;}
+  .cover{grid-template-columns:1fr;}
+  .cover .left{padding:28px 20px 24px;}
+  .cover .logo{height:24px;}
+  .cover .kick{margin-top:40px;font-size:11px;} .cover .kick i{width:22px;height:4px;}
+  .cover .lede{font-size:15px;}
+  .cover-foot{flex-wrap:wrap;gap:16px;}
+  .cover-foot span{font-size:10px;} .cover-foot b{font-size:15px;}
+  .cover .right{height:70vw;}
+  .cover .right::after{background:linear-gradient(180deg,var(--invert-ground) 0%,rgba(7,8,15,0) 25%);}
+  .cover .badge{font-size:10px;padding:8px 10px;right:14px;bottom:14px;} .cover .badge small{font-size:10px;}
+  .steps,.cards,.intro,.close-grid,.fit,.tracks,.price,.news,.brandgrid,.cover,.real .pair{grid-template-columns:minmax(0,1fr);gap:16px;}
+  .real .pair{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .stage,.body-area,.cover .left,.col,.xhead>div{min-width:0;max-width:100%;}
+  .bar{flex-wrap:wrap;row-gap:6px;} .mark{white-space:normal;}
+  .stage h2{font-size:26px !important;max-width:none !important;line-height:1.12 !important;}
+  .stage .lede{font-size:15px !important;max-width:none !important;}
+  .stage .head{margin-bottom:18px !important;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+  .stat,.stat+.stat{padding:12px 10px 12px 0;border-left:0;}
+  .stat b{font-size:30px;} .stat span{font-size:10px;}
+  .fit h3{font-size:19px;}
+  .track{grid-template-columns:12px 1fr;gap:10px;} .track i{width:10px;height:10px;margin-top:3px;}
+  .track b{font-size:14px;} .track span{font-size:13px;}
+  .xhead{grid-template-columns:1fr;gap:6px;} .xnum{font-size:48px;}
+  .xgrid,.news{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+  .xgrid .xhead,.news .side{grid-column:1 / -1;padding:0;}
+  .xgrid .xhead h2{font-size:26px;}
+  .xgrid figcaption{font-size:12px;padding:28px 10px 8px;} .xgrid figcaption b{font-size:9px;}
+  .xmeta{font-size:13px;}
+  .xgrid .inset{width:52px;} .xgrid .inset.wide{width:68px;}
+  .inset{width:64px;} .inset.wide{width:84px;} .inset span{font-size:7px;}
+  .brandgrid .fr img,.brandgrid .wr img{height:auto;max-height:520px;}
+  .real .pair img{height:auto;}
+  .brandgrid .nm{font-size:15px;} .brandgrid .sb{font-size:13px;}
+  .deflist div{grid-template-columns:1fr;gap:4px;}
+  .deflist dt{font-size:10px;} .deflist dd{font-size:14px;}
+  .vgrid{grid-template-columns:1fr 1fr;gap:14px;}
+  .vnote{grid-column:1 / -1;}
+  .totem-shot img{height:auto;aspect-ratio:9/16;}
+  .card .kicker,.step .n,.vfig .tag,.totem-shot figcaption{font-size:10px;}
+  .step h3{font-size:17px;} .step p,.card p,.vfig .txt,.vnote p{font-size:14px;}
+  .card h3{font-size:20px;} .vnote h3{font-size:16px;}
+  .caselist .what,.cta p,.contact,.specstrip,.foot-note,.card .why,.price-note{font-size:14px;}
+  .caselist .who{font-size:16px;} .cta h2{font-size:24px;} .contact b{font-size:16px;} .contact img{height:22px;}
+  .line h3{font-size:17px;} .line .v{font-size:17px;} .line p{font-size:14px;}
+  .total{padding:22px;} .total small{font-size:11px;} .total b{font-size:44px;} .total p,.total ul{font-size:14px;}
+  .rail{display:none;}
+}
+
+/* ---------- print: one slide per page, posters for video ---------- */
+@media print{
+  @page{size:297mm 167mm;margin:0;}
+  :root{
+    --ground:#FFFFFF;--surface:#FFFFFF;--surface-2:#F2F3F8;
+    --ink:#0B0C14;--ink-mute:#565A6A;--line:#DCDEE8;--accent:#3D52E6;
+  }
+  .logo-ink{display:block !important;} .logo-white{display:none !important;}
+  .is-invert .logo-ink{display:none !important;} .is-invert .logo-white{display:block !important;}
+  body{background:#fff;}
+  .deck{height:auto;overflow:visible;}
+  .slide{min-height:0;padding:0;break-after:page;page-break-after:always;}
+  .slide:last-child{break-after:auto;page-break-after:auto;}
+  .stage{width:297mm;height:167mm;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;break-inside:avoid;page-break-inside:avoid;}
+  .rail{display:none;}
+  .js .reveal>*{opacity:1;transform:none;transition:none;}
+  .vwrap video{display:none;}
+  .vwrap .poster-img{display:block;}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+}
+</style>
+
+<div class="deck" id="deck">
+
+  <!-- ============ CAPA ============ -->
+  <section class="slide">
+    <div class="stage is-invert cover">
+      <div class="left reveal">
+        <img class="logo" src="__IMG_LOGO_WHITE__" alt="CRIA Incubator">
+        <p class="kick"><i></i>Proposta · BB Digital Week 2026</p>
+        <h1>O participante sobe no palco do <span class="hl">BBDW</span>.</h1>
+        <p class="lede">Totem de inteligência artificial que coloca cada visitante no palco principal, no Brasil de 2036 e na capa do jornal — com a foto impressa na mão em menos de um minuto.</p>
+        <div class="cover-foot">
+          <div><span>Quando</span><b>27 a 29 de outubro</b></div>
+          <div><span>Onde</span><b>Ulysses Centro de Convenções</b></div>
+          <div><span>Público</span><b>+25 mil pessoas</b></div>
+        </div>
+      </div>
+      <div class="right">
+        <img src="__IMG_PAL_DUPLA__" alt="Dois visitantes gerados pelo totem como palestrantes no palco do BB Digital Week 2026">
+        <p class="badge">Gerada pelo Totem CRIA<small>a partir de uma foto tirada na tela</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 · O QUE É ============ -->
+  <section class="slide">
+    <div class="stage">
+      <div class="bar">
+        <p class="eyebrow"><b>01</b> &nbsp;·&nbsp; O que é</p>
+        <p class="mark"><img class="logo-ink" src="__IMG_LOGO_INK__" alt="CRIA Incubator"><img class="logo-white" src="__IMG_LOGO_WHITE__" alt=""></p>
+      </div>
+      <div class="body-area reveal">
+        <div class="intro">
+          <div class="col">
+            <div class="head" style="margin-bottom:2cqw">
+              <h2 style="font-size:3.4cqw;max-width:17ch">Uma foto comum entra. Uma <span class="hl">cena impossível</span> sai.</h2>
+              <p class="lede" style="font-size:1.38cqw;max-width:54ch">O visitante toca na tela, escolhe a experiência e tira uma foto. Em menos de um minuto recebe a imagem impressa e no e-mail. Até cinco pessoas na mesma cena — e três visitantes atendidos ao mesmo tempo, um por face do totem.</p>
+            </div>
+            <div class="steps" style="--n:4">
+              <div class="step"><span class="n">PASSO 01</span><h3>Escolhe</h3><p>Menu com as três experiências do BBDW.</p></div>
+              <div class="step"><span class="n">PASSO 02</span><h3>Posa</h3><p>Câmera ao vivo na tela, com opção de refazer.</p></div>
+              <div class="step"><span class="n">PASSO 03</span><h3>A IA transforma</h3><p>Cenário e figurino novos — cada rosto preservado e reconhecível.</p></div>
+              <div class="step"><span class="n">PASSO 04</span><h3>Leva embora</h3><p>Impressa na hora, com a marca do evento, e no e-mail.</p></div>
+            </div>
+            <div class="specstrip">
+              <span><b>3 telas</b> touch · uma por face</span>
+              <span><b>4 câmeras</b> · <b>2 impressoras</b></span>
+              <span><b>40–90s</b> por atendimento</span>
+              <span>até <b>5 pessoas</b> por foto</span>
+              <span>foto <b>10×15</b> + jornal <b>A4</b></span>
+              <span>Wi-Fi · Ethernet · <b>4G</b></span>
+            </div>
+          </div>
+          <figure class="totem-shot">
+            <img src="__IMG_TOTEM_EVENTO__" alt="Mockup do totem envelopado com as cores do BBDW, em uso no pavilhão do evento">
+            <figcaption>Mockup · totem com a<br>identidade do BBDW</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · O EVENTO ============ -->
+  <section class="slide">
+    <div class="stage">
+      <div class="bar">
+        <p class="eyebrow"><b>02</b> &nbsp;·&nbsp; O evento</p>
+        <p class="mark">BB Digital Week · 6ª edição</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="head" style="margin-bottom:1.8cqw">
+          <h2 style="font-size:3.1cqw;max-width:26ch">O maior evento de tecnologia do Centro-Oeste.</h2>
+        </div>
+        <div class="stats">
+          <div class="stat"><b>+25 mil</b><span>participantes</span></div>
+          <div class="stat"><b>3</b><span>dias de evento</span></div>
+          <div class="stat"><b>11</b><span>palcos</span></div>
+          <div class="stat"><b>237</b><span>painéis</span></div>
+          <div class="stat"><b>+200</b><span>palestrantes</span></div>
+        </div>
+        <div class="fit">
+          <div>
+            <h3>O tema do evento, na mão do participante.</h3>
+            <p class="lede">O BBDW discute IA, dados e experiência nos palcos. O Totem é a versão que o público toca: IA generativa aplicada, personalizada para cada pessoa, em segundos.</p>
+          </div>
+          <div class="tracks">
+            <div class="track"><i></i><div><b>Inteligência Artificial &amp; Dados</b><span>IA generativa ao vivo, com o rosto do visitante.</span></div></div>
+            <div class="track"><i></i><div><b>Experiência &amp; Hiperpersonalização</b><span>Cada resultado é único: rosto, nome e escolhas dele.</span></div></div>
+            <div class="track"><i></i><div><b>Acessibilidade Digital</b><span>Câmera baixa para cadeirantes e crianças.</span></div></div>
+            <div class="track"><i></i><div><b>Confiança Digital</b><span>A foto é apagada da memória ao fim de cada sessão.</span></div></div>
+            <div class="track"><i></i><div><b>Inovação Verde</b><span>Entrega por e-mail como alternativa à impressão.</span></div></div>
+            <div class="track"><i></i><div><b>Inovação &amp; Novas Tecnologias</b><span>Produto de IA feito em Brasília, por incubadora do DF.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · PALESTRANTE ============ -->
+  <section class="slide">
+    <div class="stage is-invert">
+      <div class="bar">
+        <p class="eyebrow"><b>03</b> &nbsp;·&nbsp; Experiência 01</p>
+        <p class="mark">Foto 10×15 · até 5 pessoas</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="xgrid">
+          <div class="xhead">
+            <span class="xnum">01</span>
+            <h2>Palestrante no <span class="hl">BBDW</span></h2>
+            <p class="lede">Sozinho, em dupla ou com a equipe inteira: o visitante vira keynote no palco principal, com o telão do evento atrás e a plateia filmando.</p>
+            <div class="xmeta"><span><b>Saída</b> · foto 10×15 impressa</span><span><b>Até 5 pessoas</b> na mesma cena</span></div>
+          </div>
+          <figure>
+            <img src="__IMG_PAL_SENIOR__" alt="Visitante como keynote no palco principal do BBDW">
+            <div class="inset"><img src="__IMG_BASE_SENIOR__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Keynote</b>Palco inteiro para ele.</figcaption>
+          </figure>
+          <figure>
+            <img src="__IMG_PAL_DUPLA__" alt="Dupla de amigos palestrando no palco do BBDW">
+            <div class="inset"><img src="__IMG_BASE_DUPLA__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Dupla</b>Os dois de microfone na mão.</figcaption>
+          </figure>
+          <figure>
+            <img src="__IMG_PAL_GRUPO__" alt="Quatro colegas juntos no palco do BBDW">
+            <div class="inset wide"><img src="__IMG_BASE_GRUPO__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Equipe</b>O time inteiro no palco.</figcaption>
+          </figure>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04 · FUTURO DIGITAL ============ -->
+  <section class="slide">
+    <div class="stage is-invert">
+      <div class="bar">
+        <p class="eyebrow"><b>04</b> &nbsp;·&nbsp; Experiência 02</p>
+        <p class="mark">Foto 10×15 · até 5 pessoas</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="xgrid">
+          <div class="xhead">
+            <span class="xnum">02</span>
+            <h2>Você no <span class="hl">Futuro Digital</span></h2>
+            <p class="lede">A IA leva o visitante para 2036: hologramas, interfaces no ar e Brasília redesenhada — nas cores do BBDW.</p>
+            <div class="xmeta"><span><b>Saída</b> · foto 10×15 impressa</span><span><b>Até 5 pessoas</b> na mesma cena</span></div>
+          </div>
+          <figure>
+            <img src="__IMG_FUT_SOLO__" alt="Profissional de 2036 com interfaces holográficas">
+            <div class="inset"><img src="__IMG_BASE_SOLO__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Profissional</b>Interfaces no ar.</figcaption>
+          </figure>
+          <figure>
+            <img src="__IMG_FUT_JOVEM__" alt="Pesquisadora de IA em 2036 com o Congresso ao fundo">
+            <div class="inset"><img src="__IMG_BASE_JOVEM__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Pesquisadora</b>Brasília ao fundo.</figcaption>
+          </figure>
+          <figure>
+            <img src="__IMG_FUT_GRUPO__" alt="Equipe de quatro pesquisadores em um laboratório de IA em Brasília">
+            <div class="inset wide"><img src="__IMG_BASE_GRUPO__" alt=""><span>Foto no totem</span></div>
+            <figcaption><b>Pesquisadores</b>A equipe no laboratório de IA.</figcaption>
+          </figure>
+        </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05 · JORNAL DO FUTURO ============ -->
+  <section class="slide">
+    <div class="stage is-invert">
+      <div class="bar">
+        <p class="eyebrow"><b>05</b> &nbsp;·&nbsp; Experiência 03</p>
+        <p class="mark">Impressão A4 · papel de jornal</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="news">
+          <div class="side">
+            <div class="xhead" style="grid-template-columns:1fr;gap:1cqw;margin:0">
+              <span class="xnum">03</span>
+              <div>
+                <h2 style="font-size:2.9cqw">Jornal do <span class="hl">Futuro</span></h2>
+                <p class="lede">A capa de 2036 com o visitante na manchete principal.</p>
+              </div>
+            </div>
+            <div class="steps">
+              <div class="step"><span class="n">01</span><h3>Nome e área de atuação</h3><p>Digitados na tela, junto com a foto.</p></div>
+              <div class="step"><span class="n">02</span><h3>A IA escreve a capa</h3><p>Manchete sobre ele e notícias de tecnologia de 2036.</p></div>
+              <div class="step"><span class="n">03</span><h3>Sai impressa</h3><p>Folha A4 em papel de jornal — o souvenir que vai para a parede.</p></div>
+            </div>
+          </div>
+          <figure class="paper"><img src="__IMG_JOR_SOLO__" alt="Capa do jornal Correio do Futuro com a visitante na manchete"></figure>
+          <figure class="paper"><img src="__IMG_JOR_SENIOR__" alt="Capa do jornal Correio do Futuro com o visitante na manchete"></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 06 · MARCA ============ -->
+  <section class="slide">
+    <div class="stage">
+      <div class="bar">
+        <p class="eyebrow"><b>06</b> &nbsp;·&nbsp; A marca do evento</p>
+        <p class="mark">Moldura · envelopamento</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="head row" style="margin-bottom:1.8cqw">
+          <h2 style="font-size:2.9cqw;max-width:20ch">O BBDW vai junto em <span class="hl">cada foto</span>.</h2>
+          <p class="lede" style="font-size:1.26cqw;flex-basis:44ch">Toda imagem sai com a moldura do evento — impressa e no e-mail. O totem recebe adesivagem completa nas três faces com a identidade do BBDW.</p>
+        </div>
+        <div class="brandgrid">
+          <figure class="fr">
+            <img src="__IMG_MOLDURA_BBDW__" alt="Conceito de moldura 10×15 do BB Digital Week 2026">
+            <figcaption><span class="nm">Moldura BBDW · 10×15</span><span class="sb">Conceito. A arte final segue o manual de marca do evento.</span></figcaption>
+          </figure>
+          <figure class="wr">
+            <img src="__IMG_WRAP_BBDW__" alt="Mockup do totem envelopado com as cores do BBDW">
+            <figcaption><span class="nm">Envelopamento</span><span class="sb">Mockup de conceito sobre o molde real do totem.</span></figcaption>
+          </figure>
+          <div class="real">
+            <div class="pair">
+              <img src="__IMG_MOLDURA_JUNINA__" alt="Moldura real usada na Festa Junina do Sesc">
+              <img src="__IMG_MOLDURA_INVERNO__" alt="Moldura real usada no Festival de Inverno do Sesc">
+            </div>
+            <dl class="deflist">
+              <div><dt>Já feito</dt><dd>Molduras reais do Sesc — Festa Junina e Festival de Inverno.</dd></div>
+              <div><dt>Telas</dt><dd>Logo, cores e tipografia do BBDW em todo o fluxo.</dd></div>
+              <div><dt>E-mail</dt><dd>A entrega digital leva a mesma marca.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07 · EM OPERAÇÃO ============ -->
+  <section class="slide">
+    <div class="stage is-invert">
+      <div class="bar">
+        <p class="eyebrow"><b>07</b> &nbsp;·&nbsp; Em operação</p>
+        <p class="mark">Registro em evento real</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="head" style="margin-bottom:1.8cqw">
+          <h2 style="font-size:3cqw;max-width:24ch">Não é protótipo. Já rodou com <span class="hl">público de verdade</span>.</h2>
+        </div>
+        <div class="vgrid">
+          <figure class="vfig">
+            <div class="vwrap">
+              <video muted loop playsinline preload="metadata" poster="__POSTER_FILA__" aria-label="Público em volta do totem durante um festival">
+                <source src="__VID_FILA__" type="video/mp4">
+              </video>
+              <img class="poster-img" src="__POSTER_FILA__" alt="Público em volta do totem durante um festival">
+            </div>
+            <div><span class="tag">Movimento</span><p class="txt">A fila se forma porque quem passa vê a foto de quem está na frente.</p></div>
+          </figure>
+          <figure class="vfig">
+            <div class="vwrap">
+              <video muted loop playsinline preload="metadata" poster="__POSTER_ACESS__" aria-label="Pessoa em cadeira de rodas usando o totem">
+                <source src="__VID_ACESS__" type="video/mp4">
+              </video>
+              <img class="poster-img" src="__POSTER_ACESS__" alt="Pessoa em cadeira de rodas usando o totem">
+            </div>
+            <div><span class="tag">Acessibilidade</span><p class="txt">Aproximação frontal, sem degrau. Quem usa cadeira de rodas opera sozinho.</p></div>
+          </figure>
+          <div class="vnote">
+            <div class="blk">
+              <h3>Acessibilidade na prática</h3>
+              <p>Uma das trilhas do BBDW é <b>Acessibilidade Digital &amp; Experiências Humanas</b>. O totem tem câmera em altura reduzida e aproximação livre: funciona para <b>criança, adulto e pessoa em cadeira de rodas</b> sem ajuda de terceiros.</p>
+            </div>
+            <div class="blk">
+              <h3>Três atendimentos ao mesmo tempo</h3>
+              <p>Cada face é uma estação independente, com tela e câmera próprias. No intervalo entre painéis, com milhares de pessoas circulando, é isso que evita gargalo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 · O RETORNO ============ -->
+  <section class="slide">
+    <div class="stage">
+      <div class="bar">
+        <p class="eyebrow"><b>08</b> &nbsp;·&nbsp; O retorno</p>
+        <p class="mark">Além da foto</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="head row">
+          <h2>O que o BBDW leva quando o participante vai embora.</h2>
+          <p class="lede">A foto é o que o público vem buscar. O que fica para o evento é o que está abaixo.</p>
+        </div>
+        <div class="cards">
+          <div class="card">
+            <span class="kicker">Conteúdo</span>
+            <h3>A marca no feed</h3>
+            <p>Toda imagem — impressa e digital — carrega a moldura do BBDW 2026. Um público de tecnologia posta no LinkedIn e no Instagram.</p>
+            <p class="why"><b>Sem promessa exagerada:</b> o totem não posta pelo visitante. Quem posta é ele — e é isso que torna o alcance espontâneo.</p>
+          </div>
+          <div class="card">
+            <span class="kicker">Contatos</span>
+            <h3>Base própria e consentida</h3>
+            <p>Para receber o arquivo, o visitante informa o e-mail e aceita o uso da imagem. Cada envio fica registrado com a experiência e a data.</p>
+            <p class="why"><b>Exportável:</b> a base é entregue ao evento ao final dos três dias.</p>
+          </div>
+          <div class="card">
+            <span class="kicker">Números</span>
+            <h3>Medição de ponta a ponta</h3>
+            <p>Imagens geradas, impressões e experiência escolhida — por dia e por face do totem. Nada depende de alguém anotar.</p>
+            <p class="why"><b>Privacidade:</b> a foto sai da memória do totem ao fim de cada sessão.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09 · INVESTIMENTO ============ -->
+  <section class="slide">
+    <div class="stage is-invert">
+      <div class="bar">
+        <p class="eyebrow"><b>09</b> &nbsp;·&nbsp; Investimento</p>
+        <p class="mark">Proposta Nº BBDW-2026-01</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="head" style="margin-bottom:1.6cqw">
+          <h2 style="font-size:3cqw">Pacote único, <span class="hl">fechado</span>.</h2>
+        </div>
+        <div class="price">
+          <div>
+            <div class="lines">
+              <div class="line">
+                <h3>Software · 3 experiências de IA</h3><span class="v">R$ 20.000</span>
+                <p>Desenvolvimento e customização de Palestrante no BBDW, Você no Futuro Digital e Jornal do Futuro. Interface em português, marca do BBDW 2026 aplicada em todas as imagens.</p>
+              </div>
+              <div class="line">
+                <h3>Hardware · Totem multimídia completo</h3><span class="v">R$ 20.000</span>
+                <p>3 telas Full HD touch, 4 câmeras, 2 impressoras (10×15 + A4), Wi-Fi / 4G, Windows integrado. Envelopamento completo com a identidade do evento.</p>
+              </div>
+              <div class="line">
+                <h3>Logística · Operação nos 3 dias</h3><span class="v">R$ 8.000</span>
+                <p>Transporte até o Ulysses Centro de Convenções, aplicação do envelopamento na véspera, técnico operador dedicado, montagem, desmontagem e operação completa.</p>
+              </div>
+            </div>
+            <p class="price-note">Condições de pagamento a serem acordadas entre as partes · PIX pelo CNPJ 51.853.718/0001-61.</p>
+          </div>
+          <div class="total">
+            <div>
+              <small>Investimento total</small>
+              <b>R$ 48.000</b>
+            </div>
+            <p>BB Digital Week 2026 · 27 a 29 de outubro · sem custos surpresa.</p>
+            <ul>
+              <li>3 experiências de IA</li>
+              <li>Totem com 3 telas e 2 impressoras</li>
+              <li>Moldura e envelopamento BBDW</li>
+              <li>Operador dedicado nos 3 dias</li>
+              <li>Base de contatos exportável</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10 · CASES + PRÓXIMO PASSO ============ -->
+  <section class="slide">
+    <div class="stage">
+      <div class="bar">
+        <p class="eyebrow"><b>10</b> &nbsp;·&nbsp; Onde já rodou</p>
+        <p class="mark">Próximo passo</p>
+      </div>
+      <div class="body-area reveal">
+        <div class="close-grid">
+          <div>
+            <div class="head" style="margin-bottom:1.7cqw">
+              <h2 style="font-size:2.7cqw">Já rodou em Brasília, com público grande.</h2>
+            </div>
+            <div class="caselist">
+              <div><span class="who">Festa Junina Sesc · Ceilândia</span><span class="what">~15 mil pessoas/dia<br>Espaço Experiência ~3 mil</span></div>
+              <div><span class="who">Festival de Inverno Sesc</span><span class="what">totem envelopado<br>registro em vídeo</span></div>
+              <div><span class="who">Porão do Rock</span><span class="what">2 dias de festival<br>Arena Mané Garrincha</span></div>
+              <div><span class="who">Calcinha Preta</span><span class="what">público ao lado da banda<br>elenco preservado</span></div>
+            </div>
+          </div>
+          <div class="cta">
+            <h2>Vamos colocar o público no palco.</h2>
+            <p>Para fechar: a posição do totem no Ulysses, a arte de envelopamento e a moldura com o time de marca do BBDW. O resto é produção — o totem chega pronto na véspera, 26 de outubro.</p>
+            <div class="contact">
+              <img class="logo-ink" src="__IMG_LOGO_INK__" alt="CRIA Incubator"><img class="logo-white" src="__IMG_LOGO_WHITE__" alt="">
+              <b>Vinícius de Aguiar</b>
+              CRIA Incubator · Brasília — DF<br>
+              diretoria@criaincubator.com.br · (61) 98639-7736<br>
+              criaincubator.com.br
+            </div>
+          </div>
+        </div>
+        <p class="foot-note">Imagens de exemplo geradas pelo próprio motor do Totem CRIA a partir de <b>visitantes fictícios</b>. No evento, cada resultado usa o rosto real de quem tirou a foto. Moldura e envelopamento são conceitos — a arte final segue o manual de marca do BBDW.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<nav class="rail" id="rail" aria-label="Navegação de slides"></nav>
+
+<script>
+(function(){
+  document.documentElement.classList.add('js');
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var rail = document.getElementById('rail');
+  var titles = ['Capa','O que é','O evento','Palestrante no BBDW','Futuro Digital','Jornal do Futuro','A marca do evento','Em operação','O retorno','Investimento','Próximo passo'];
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduce){
+    document.querySelectorAll('video').forEach(function(v){ v.setAttribute('controls',''); });
+  }
+
+  slides.forEach(function(s, i){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Slide ' + (i+1) + ': ' + (titles[i] || ''));
+    b.addEventListener('click', function(){ go(i); });
+    rail.appendChild(b);
+  });
+  var dots = Array.prototype.slice.call(rail.children);
+
+  function current(){
+    var best = 0, bestD = Infinity;
+    slides.forEach(function(s, i){
+      var d = Math.abs(s.getBoundingClientRect().top);
+      if (d < bestD){ bestD = d; best = i; }
+    });
+    return best;
+  }
+  function mark(i){
+    dots.forEach(function(d, j){ d.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+  }
+  function go(i){
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    slides[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    mark(i);
+  }
+
+  // Reveal on entry; play video only while its slide is on screen.
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var vids = e.target.querySelectorAll('video');
+      if (e.isIntersecting){
+        e.target.classList.add('seen');
+        if (!reduce) vids.forEach(function(v){ var p = v.play(); if (p) p.catch(function(){}); });
+      } else {
+        vids.forEach(function(v){ v.pause(); });
+      }
+    });
+  }, { threshold: 0.35 });
+  slides.forEach(function(s){ io.observe(s); });
+
+  // Safety net: reveal anything already on screen if the observer never fires.
+  setTimeout(function(){
+    slides.forEach(function(s){
+      var r = s.getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) s.classList.add('seen');
+    });
+    mark(current());
+  }, 700);
+
+  var tick;
+  deck.addEventListener('scroll', function(){
+    clearTimeout(tick);
+    tick = setTimeout(function(){ mark(current()); }, 60);
+  }, { passive: true });
+
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA)$/.test((e.target.tagName || ''))) return;
+    var k = e.key;
+    if (k === 'ArrowDown' || k === 'ArrowRight' || k === 'PageDown' || k === ' '){
+      e.preventDefault(); go(current() + 1);
+    } else if (k === 'ArrowUp' || k === 'ArrowLeft' || k === 'PageUp'){
+      e.preventDefault(); go(current() - 1);
+    } else if (k === 'Home'){ e.preventDefault(); go(0); }
+    else if (k === 'End'){ e.preventDefault(); go(slides.length - 1); }
+  });
+
+  slides[0].classList.add('seen');
+  mark(0);
+})();
+</script>
