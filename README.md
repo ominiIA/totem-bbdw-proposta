@@ -62,5 +62,7 @@ código como texto na imagem.
 ## Conteúdo
 
 Investimento: R$ 48.000 (software 20 mil + hardware 20 mil + logística 8 mil),
-mesmo valor da proposta do Porão do Rock. Moldura e envelopamento são conceitos;
+mesmo valor da proposta do Porão do Rock. O slide de investimento abre espaço para contraproposta.
+A experiência 03 é o Jornal do Nascimento: capa do dia em que o visitante nasceu,
+com ele bebê, hoje e mais velho. Moldura e envelopamento são conceitos;
 a arte final segue o manual de marca do BBDW. O deck não usa o logo oficial do BB.

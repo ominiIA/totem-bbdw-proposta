@@ -79,16 +79,31 @@ JOBS = {
         + PALETTE + ", at dusk on a rooftop terrace overlooking a futuristic Brasília skyline with the Esplanada and "
         "the National Congress towers. " + KEEP + " Vertical portrait composition (2:3, like a 10×15 photo print), no text.", "2:3"),
 
-    # ---------- jornal do futuro ----------
+    # ---------- jornal do nascimento ----------
+    "feat-jornal": (["base-solo"], PRO,
+        "Create the full front page of a vintage Brazilian printed broadsheet newspaper named \"JORNAL DO NASCIMENTO\", dated "
+        "\"Brasília, 14 de março de 1994\", 1990s newsprint style. Main headline in Portuguese, big and bold: "
+        "\"NASCE UMA FUTURA ESTRELA DO ROCK\". Below it a large front-page photo of the woman from the input photo as a "
+        "newborn baby girl (about 1 year old), cute, in a 1990s family photo look — clearly the same person as a baby. "
+        "At the bottom of the page a horizontal strip with the caption \"Veja projeções de como essa criança vai ser no futuro\" "
+        "and three photos side by side with small labels: \"1994\" (the same woman as a baby), \"HOJE\" (the woman exactly as "
+        "in the input photo, same pose and clothes) and \"2056\" (the same woman about 60 years old, elegant, stylish, silver hair, "
+        "rock-star attitude). One narrow side column titled \"FATOS DE 1994\" with short real headlines in Portuguese: "
+        "\"Brasil é tetracampeão mundial nos EUA\", \"Plano Real: nova moeda chega ao bolso dos brasileiros\", "
+        "\"O Rei Leão estreia nos cinemas\". Black and white with slightly yellowed paper texture, serif masthead, realistic "
+        "newspaper layout, legible headlines, Portuguese text only. " + KEEP, "3:4"),
     "jornal-senior": (["base-senior"], PRO,
-        "Create the full front page of a Brazilian printed broadsheet newspaper named \"CORREIO DO FUTURO\", dated "
-        "\"Brasília, 27 de outubro de 2036\". Main headline in Portuguese: \"Engenheiro de Brasília cria rede de "
-        "energia solar inteligente para todo o Centro-Oeste\". A large front-page photo of the man from the input photo, "
-        "ten years older, smiling in front of solar panels at sunset — keep his face recognizable. Below, three smaller "
-        "news columns in Portuguese with short headlines: \"Carros autônomos já são maioria no Eixo Monumental\", "
-        "\"IA ajuda produtor do cerrado a dobrar a colheita\", \"Escolas do DF ensinam programação desde o 1º ano\". "
-        "Classic newsprint look, black and white with slight paper texture, serif masthead, realistic newspaper "
-        "layout, legible headlines, Portuguese text only.", "3:4"),
+        "Create the full front page of a vintage Brazilian printed broadsheet newspaper named \"JORNAL DO NASCIMENTO\", dated "
+        "\"Rio de Janeiro, 22 de julho de 1965\" (the date is the only text in the line under the masthead), 1960s newsprint style.Main headline in Portuguese, big and bold: "
+        "\"NASCE O GRANDE ASTRO DO FUTEBOL\". Below it a large front-page photo of the man from the input photo as a "
+        "baby boy (about 1 year old) holding a small leather football, in a 1960s family photo look — clearly the same person "
+        "as a baby. At the bottom of the page a horizontal strip with the caption \"Veja projeções de como essa criança vai ser "
+        "no futuro\" and three photos side by side with small labels: \"1965\" (the same man as a baby), \"HOJE\" (the man "
+        "exactly as in the input photo, same pose and clothes) and \"2046\" (the same man about 80 years old, white beard, "
+        "stylish linen suit and hat, confident). One narrow side column titled \"FATOS DE 1965\" with short real headlines in "
+        "Portuguese: \"TV Globo entra no ar no Rio\", \"Rio de Janeiro festeja seus 400 anos\", \"Beatles lançam Help!\". "
+        "Black and white with yellowed paper texture, serif masthead, realistic newspaper layout, legible headlines, "
+        "Portuguese text only. " + KEEP, "3:4"),
 
     # ---------- envelopamento ----------
     "wrap-bbdw": (["wrap-starwars"], PRO,

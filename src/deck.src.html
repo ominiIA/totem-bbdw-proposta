@@ -267,6 +267,7 @@ p{margin:0;}
 .total ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.45cqw;font-size:1.04cqw;line-height:1.35;border-top:1px solid rgba(11,12,20,.2);padding-top:1.2cqw;}
 .total li::before{content:"✓ ";font-weight:800;color:var(--bb-indigo);}
 .price-note{margin-top:1.5cqw;font-size:1cqw;line-height:1.45;color:var(--invert-mute);}
+.price-note b{color:var(--bb-yellow);font-weight:700;}
 
 /* ---------- close ---------- */
 .close-grid{display:grid;grid-template-columns:1fr .85fr;gap:4.5cqw;align-items:center;}
@@ -417,7 +418,7 @@ p{margin:0;}
         <img class="logo" src="__IMG_LOGO_WHITE__" alt="CRIA Incubator">
         <p class="kick"><i></i>Proposta · BB Digital Week 2026</p>
         <h1>O participante sobe no palco do <span class="hl">BBDW</span>.</h1>
-        <p class="lede">Totem de inteligência artificial que coloca cada visitante no palco principal, no Brasil de 2036 e na capa do jornal — com a foto impressa na mão em menos de um minuto.</p>
+        <p class="lede">Totem de inteligência artificial que coloca cada visitante no palco principal, no Brasil de 2036 e na capa do jornal do dia em que nasceu — com a foto impressa na mão em menos de um minuto.</p>
         <div class="cover-foot">
           <div><span>Quando</span><b>27 a 29 de outubro</b></div>
           <div><span>Onde</span><b>Ulysses Centro de Convenções</b></div>
@@ -577,7 +578,7 @@ p{margin:0;}
     </div>
   </section>
 
-  <!-- ============ 05 · JORNAL DO FUTURO ============ -->
+  <!-- ============ 05 · JORNAL DO NASCIMENTO ============ -->
   <section class="slide">
     <div class="stage is-invert">
       <div class="bar">
@@ -590,18 +591,18 @@ p{margin:0;}
             <div class="xhead" style="grid-template-columns:1fr;gap:1cqw;margin:0">
               <span class="xnum">03</span>
               <div>
-                <h2 style="font-size:2.9cqw">Jornal do <span class="hl">Futuro</span></h2>
-                <p class="lede">A capa de 2036 com o visitante na manchete principal.</p>
+                <h2 style="font-size:2.9cqw">Jornal do <span class="hl">Nascimento</span></h2>
+                <p class="lede">A capa do dia em que o visitante nasceu — e projeções de como ele é bebê, hoje e mais velho.</p>
               </div>
             </div>
             <div class="steps">
-              <div class="step"><span class="n">01</span><h3>Nome e área de atuação</h3><p>Digitados na tela, junto com a foto.</p></div>
-              <div class="step"><span class="n">02</span><h3>A IA escreve a capa</h3><p>Manchete sobre ele e notícias de tecnologia de 2036.</p></div>
+              <div class="step"><span class="n">01</span><h3>Data de nascimento</h3><p>Digitada na tela, junto com a foto.</p></div>
+              <div class="step"><span class="n">02</span><h3>A IA monta a capa</h3><p>“Nasce o grande astro” do rock, da NBA, do futebol ou do Oscar (sorteio da IA), fatos marcantes daquele ano e a faixa “Veja projeções de como essa criança vai ser no futuro”.</p></div>
               <div class="step"><span class="n">03</span><h3>Sai impressa</h3><p>Folha A4 em papel de jornal — o souvenir que vai para a parede.</p></div>
             </div>
           </div>
-          <figure class="paper"><img src="__IMG_JOR_SOLO__" alt="Capa do jornal Correio do Futuro com a visitante na manchete"></figure>
-          <figure class="paper"><img src="__IMG_JOR_SENIOR__" alt="Capa do jornal Correio do Futuro com o visitante na manchete"></figure>
+          <figure class="paper"><img src="__IMG_JOR_SOLO__" alt="Capa do Jornal do Nascimento: nasce uma futura estrela do rock, com a visitante bebê, hoje e mais velha"></figure>
+          <figure class="paper"><img src="__IMG_JOR_SENIOR__" alt="Capa do Jornal do Nascimento: nasce o grande astro do futebol, com o visitante bebê, hoje e mais velho"></figure>
         </div>
       </div>
     </div>
@@ -741,7 +742,7 @@ p{margin:0;}
             <div class="lines">
               <div class="line">
                 <h3>Software · 3 experiências de IA</h3><span class="v">R$ 20.000</span>
-                <p>Desenvolvimento e customização de Palestrante no BBDW, Você no Futuro Digital e Jornal do Futuro. Interface em português, marca do BBDW 2026 aplicada em todas as imagens.</p>
+                <p>Desenvolvimento e customização de Palestrante no BBDW, Você no Futuro Digital e Jornal do Nascimento. Interface em português, marca do BBDW 2026 aplicada em todas as imagens.</p>
               </div>
               <div class="line">
                 <h3>Hardware · Totem multimídia completo</h3><span class="v">R$ 20.000</span>
@@ -752,7 +753,8 @@ p{margin:0;}
                 <p>Transporte até o Ulysses Centro de Convenções, aplicação do envelopamento na véspera, técnico operador dedicado, montagem, desmontagem e operação completa.</p>
               </div>
             </div>
-            <p class="price-note">Condições de pagamento a serem acordadas entre as partes · PIX pelo CNPJ 51.853.718/0001-61.</p>
+            <p class="price-note"><b>Aberto a contraproposta.</b> Este é o valor que praticamos para Brasília. Como queremos construir essa parceria com o BB Digital Week, estamos abertos a receber uma contraproposta.</p>
+            <p class="price-note" style="margin-top:.6cqw">Condições de pagamento a serem acordadas entre as partes · PIX pelo CNPJ 51.853.718/0001-61.</p>
           </div>
           <div class="total">
             <div>
@@ -820,7 +822,7 @@ p{margin:0;}
   var deck = document.getElementById('deck');
   var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
   var rail = document.getElementById('rail');
-  var titles = ['Capa','O que é','O evento','Palestrante no BBDW','Futuro Digital','Jornal do Futuro','A marca do evento','Em operação','O retorno','Investimento','Próximo passo'];
+  var titles = ['Capa','O que é','O evento','Palestrante no BBDW','Futuro Digital','Jornal do Nascimento','A marca do evento','Em operação','O retorno','Investimento','Próximo passo'];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (reduce){
